@@ -1,30 +1,35 @@
-import React, {Component} from 'react';
+import React from 'react';
 
-class listGroup extends Component{
+const listGroup = props => {
 
+    //declari niste constante in ES6 ca sa nu mai trebuiasca sa scrii props.genres in template
+    const {genres, textProperty, valueProperty, onOrdonateMoviesByGenres} = props;
 
-    render() {
-        return (
-            <ul className="list-group">
-                {/*<li className={"all" ? "list-group-item active" : "list-group-item"}*/}
-                {/*    onClick={() => this.props.onOrdonateMoviesByGenres('all', true)}*/}
-                {/*>All genres</li>*/}
-                {this.props.genres.map((item,index) => {
-                    return <li key={item._id}
-                               className={item.selected ? "list-group-item active" : "list-group-item"}
-                               onClick={() => this.props.onOrdonateMoviesByGenres(item)}
-                            >{item.name}</li>
+    //pot fi scrise si asa, practic sunt niste constante doar ca in ES6 le scrii pe toate odata ca toate vin din obiectul de props;
+    // const genres = this.props.genres;
+    // const valueProperty = this.props.valueProperty;
+    // const textProperty = this.props.textProperty;
 
-                })}
-                {/*<li className="list-group-item active">All genres</li>*/}
-                {/*<li className="list-group-item">Action</li>*/}
-                {/*<li className="list-group-item">Thriller</li>*/}
-                {/*<li className="list-group-item">Comedy</li>*/}
-                {/*<li className="list-group-item">Drama</li>*/}
-            </ul>
-        )
-    }
+    return (
+        <ul className="list-group">
+            {genres.map((item, index) => {
+                return <li key={item[valueProperty]}
+                           className={item.selected ? "list-group-item active" : "list-group-item"}
+                           onClick={() => onOrdonateMoviesByGenres(item)}
+                        >{item[textProperty]}</li>
 
-}
+            })}
+        </ul>
+    )
+
+};
+
+    //e acelasi lucru daca as trimite props direct din parinte textProperty='name'
+
+    listGroup.defaultProps = {
+        textProperty: 'name',
+        valueProperty: '_id'
+    };
+
 
 export default listGroup;

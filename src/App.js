@@ -1,12 +1,12 @@
 import React from 'react';
 import './App.css';
 
-import TableOfMovies from './components/tableOfMovies';
+import Movies from './components/movies';
 
 function App() {
   return (
       <main className="container">
-        <TableOfMovies/>
+        <Movies/>
       </main>
   );
 }
