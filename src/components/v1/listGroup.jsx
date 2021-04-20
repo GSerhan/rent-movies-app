@@ -11,7 +11,7 @@ const listGroup = props => {
     // const textProperty = this.props.textProperty;
 
     return (
-        <ul className="list-group">
+        <ul className="list-group col-3">
             {genres.map((item, index) => {
                 return <li key={item[valueProperty]}
                            className={item.selected ? "list-group-item active" : "list-group-item"}

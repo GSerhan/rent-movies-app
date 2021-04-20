@@ -1,16 +1,18 @@
 import React, {Component} from 'react';
 import LikeButton from './likeButton';
 
+const tableStyle = {
+    maxWidth: '75%'
+};
+
 class TableOfRowMovies extends Component{
-
-
 
 
     renderTableHeader() {
         return (
-            <ul className={this.props.movies.length === 0 ? 'd-none' : 'table__header d-flex align-items-center justify-content-between'}>
+            <tr className={this.props.movies.length === 0 ? 'd-none' : 'table__header'}>
                 {this.props.tableHeader.map( item => {
-                    return <li key={item.id} className={'table__header-item ' + item.key}
+                    return <th key={item.id} className={'table__header-item ' + item.key}
                             >{item.label}
                             {(item.sortType === 'desc' || typeof item.sortType === 'undefined') && <i className={item.iconAsc + ' cursor-pointer'}
                                onClick={() => this.props.onSort(item, 'asc')}
@@ -18,29 +20,31 @@ class TableOfRowMovies extends Component{
                             {item.sortType === 'asc' && <i className={item.iconDesc + ' cursor-pointer'}
                                onClick={() => this.props.onSort(item, 'desc')}
                             ></i>}
-                            </li>
+                            </th>
                 })}
-            </ul>
+            </tr>
         )
     };
 
     renderList() {
         return (
-            <ul>
+            <tbody>
                 {this.props.movies.map((item, index) =>
-                    <li key={index} className={item.genre + " table__list-item d-flex align-items-center justify-content-between"}>
-                        <span>{item.title}</span>
-                        <span>{item.numberInStock}</span>
-                        <span>{item.genre}</span>
-                        <span>{item.dailyRentalRate}</span>
+                    <tr key={index} className={item.genre}>
+                        <th>{item.title}</th>
+                        <th>{item.numberInStock}</th>
+                        <th>{item.genre}</th>
+                        <th>{item.dailyRentalRate}</th>
                         <LikeButton
                         movie={item}
                         onLikeChild={this.props.onLike}
                     ></LikeButton>
-                        <button onClick={() => this.props.onDelete(item)}>delete</button>
-                    </li>
+                        <th>
+                            <button className="btn btn-danger btn-sm" onClick={() => this.props.onDelete(item)}>delete</button>
+                        </th>
+                    </tr>
                 )}
-            </ul>
+            </tbody>
         )
     }
 
@@ -48,16 +52,15 @@ class TableOfRowMovies extends Component{
 
     render() {
         return (
-            <div>
-                <div className={"table-header_container"}>
+            <table className="table col-9" style={tableStyle}>
+                <thead className="table-header_container">
                     {this.renderTableHeader()}
-                </div>
-                <div className={"table-content_container"}>
-                    {this.renderList()}
-                </div>
-            </div>
+                </thead>
+                {this.renderList()}
+            </table>
         )
     }
 
 }
+
 export default TableOfRowMovies;

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import {getMovies} from '../services/fakeMovieService';
-import {getGenres} from "../services/fakeGenreService";
+import {getMovies} from '../../services/fakeMovieService';
+import {getGenres} from "../../services/fakeGenreService";
 import MoviesTable from './moviesTable';
 import Pagination from './pagination';
 import ListGroup from './listGroup';
@@ -207,13 +207,6 @@ class Movies extends Component{
 
         let localMovies = [...this.state.backupMovies];
 
-        // let headerTableLocal = [...this.state.tableHeader];
-
-        // headerTableLocal.map((item) => {
-        //     return item.sortType = sortType;
-        // });
-
-
         //sort string
 
         localMovies.sort(function (a, b) {
@@ -258,17 +251,20 @@ class Movies extends Component{
 
         return (
             <div>
-                <div>
-                    {this.renderHeader()}
-                    {/*{this.state.movies.length === 0 ? <h3> Nu sunt produse</h3>  : <h3>Produse: {this.state.movies.length}</h3>}*/}
+                {this.renderHeader()}
+                <div className="d-flex align-items-center justify-content-between">
+                    <ListGroup
+                        genres={this.state.genres}
+                        onOrdonateMoviesByGenres={this.ordonateMoviesByGenres}
+                    ></ListGroup>
+                    <MoviesTable
+                        tableHeader={this.state.tableHeader}
+                        movies={this.state.backupMovies}
+                        onDelete={this.handleDelete}
+                        onLike={this.handleLike}
+                        onSort={this.handleSort}
+                    ></MoviesTable>
                 </div>
-                <MoviesTable
-                    tableHeader={this.state.tableHeader}
-                    movies={this.state.backupMovies}
-                    onDelete={this.handleDelete}
-                    onLike={this.handleLike}
-                    onSort={this.handleSort}
-                ></MoviesTable>
                 {!this.state.hidePagination &&
                 <Pagination
                     movies={this.state.movies}
@@ -279,25 +275,6 @@ class Movies extends Component{
                     onPaginatePrevious={this.paginatePrevious}
                 ></Pagination>
                 }
-                <ListGroup
-                    genres={this.state.genres}
-                    onOrdonateMoviesByGenres={this.ordonateMoviesByGenres}
-                ></ListGroup>
-                {/*{this.renderList()}*/}
-                {/*<ul className={this.state.movies.length === 0 ? 'd-none' : "table__header d-flex"}>*/}
-                {/*    {this.state.tableHeader.map(item =>*/}
-                {/*        <li key={item.key} className={item.key !== 'undefined' ? item.key : "table__header-item"}>{item.label}</li>*/}
-                {/*    )}*/}
-                {/*</ul>*/}
-                {/*<ul>{this.state.movies.map(item =>*/}
-                {/*    <li className={item.genre.name + " table__list-item"} key={item._id}>*/}
-                {/*        <span>{item.title}</span>*/}
-                {/*        <span>{item.numberInStock}</span>*/}
-                {/*        <span>{item.genre.name}</span>*/}
-                {/*        <span>{item.dailyRentalRate}</span>*/}
-                {/*        <button onClick={() => this.handleDelete(item)}>delete</button>*/}
-                {/*    </li>)}*/}
-                {/*</ul>*/}
             </div>
         )
     }
